@@ -1,0 +1,101 @@
+<html>
+<head>
+  <title>Page Title</title>
+  <meta charset="UTF-8"/>
+</head>
+<body>
+  <script>
+    // Your JavaScript goes here!
+    let compThrow = '';
+    let playerThrow = '';
+
+    function computerPlay () {
+        let compNum = Math.floor(Math.random() * 3) + 1;
+        switch (compNum) {
+            case 1:
+                compThrow = 'Rock';
+                break;
+            case 2: 
+            compThrow = 'Paper';
+                break;
+            case 3:
+            compThrow = 'Scissors';
+                break;
+            default : 
+            compThrow =  'Computer';
+        }
+        return (compThrow);
+    }
+
+    function oneRound (playerSelect, compSelect) {
+        playerSelect = playerSelect.toLowerCase();
+        compSelect = compSelect.toLowerCase();
+        if (compSelect == 'computer' || compSelect == '') {
+            console.log("Opponent Forfeits! : " + compSelect);
+            return("Opponent Forfeits! : " + compSelect, 'win');
+        } else if (!(compSelect == 'rock' || compSelect == 'paper' || compSelect == 'scissors')) {
+            console.log('Computer Wrong Choice: ' + compSelect);
+            return('Computer Wrong Choice: ' + compSelect);
+        }
+        if (playerSelect == 'rock' || playerSelect == 'paper' || playerSelect == 'scissors') {
+            if (playerSelect == compSelect){
+                console.log('TIE');
+                return('tie');
+            }
+            if (playerSelect == 'rock') {
+                if (compSelect == 'scissors') {
+                    console.log('Win To Scissors');
+                    return('win');
+                } else {
+                    console.log('Lose to Paper');
+                    return('lose');
+                }
+            }
+            if (playerSelect == 'paper') {
+                if (compSelect == 'rock') {
+                   console.log('Win To Rock');
+                    return('win');
+                } else {
+                    console.log('Lose to Scissors');
+                    return('lose');
+                }
+            }
+            if (playerSelect == 'scissors') {
+                if (compSelect == 'paper') {
+                    console.log('Win To Paper');
+                    return('win');
+                } else {
+                    console.log('Lose to Rock');
+                    return('lose');
+                }
+            }
+        } else {
+        console.log('Wrong choice');
+        return('wrong');
+        }
+    }
+
+    function game (rounds) {
+        let playerScore = 0;
+        let compScore = 0;
+
+        for (let i = 1; i <= rounds; i++) {
+
+            playerThrow = prompt('Rock, Paper, or Scissors');
+            computerPlay();
+            let score = '';
+            score = oneRound(playerThrow, compThrow);
+            
+            if (score == 'win') {
+                playerScore++;
+            } else if (score =='lose') {
+                compScore++;
+            } else if (score == 'wrong') {
+                --i;
+            }
+        }
+        return(playerScore + ":" + compScore)
+    }
+  </script>
+</body>
+</html>
