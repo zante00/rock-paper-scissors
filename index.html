@@ -1,13 +1,62 @@
+<!DOCTYPE html>
 <html>
 <head>
-  <title>Page Title</title>
+  <title>Rock, Paper, Scissors</title>
   <meta charset="UTF-8"/>
 </head>
 <body>
+    <button class='rock-button'>Rock</button>
+    <button class='paper-button'>Paper</button>
+    <button class='scissors-button'>Scissors</button>
+    <button onclick="game(5)">game</button>
+    <button onclick="resetScores()">Reset</button>
+
+    <div id = 'record'>
+        <p id = 'results'>Results: 0:0</p>
+    </div>
   <script>
-    // Your JavaScript goes here!
     let compThrow = '';
     let playerThrow = '';
+    let playerScore = 0;
+    let compScore = 0;
+
+    const resultsPrinted = document.querySelector('#results')
+    const record = document.querySelector('#record');
+    
+    const rock = document.querySelector('.rock-button');
+    rock.addEventListener('click', () => {
+         playerThrow = 'rock';
+         playGame();
+
+    });
+    const paper = document.querySelector('.paper-button');
+    paper.addEventListener('click', () =>  {
+         playerThrow = 'paper';
+         playGame();
+
+    });
+
+    const scissors = document.querySelector('.scissors-button');
+    scissors.addEventListener('click', () =>  {
+         playerThrow = 'scissors';
+         playGame();
+
+    });
+
+    function results(text) {
+        let outcome = document.createElement('p');
+        outcome.textContent = text;
+        outcome.classList = 'outcome';
+        record.appendChild(outcome);
+    }
+
+    function resetScores() {
+        playerScore = 0;
+        compScore = 0;
+        resultsPrinted.textContent = `Results: ${playerScore}:${compScore}`
+        const elements = document.getElementsByClassName("outcome");
+        while (elements.length > 0) elements[0].remove();
+    }
 
     function computerPlay () {
         let compNum = Math.floor(Math.random() * 3) + 1;
@@ -27,55 +76,80 @@
         return (compThrow);
     }
 
+    function playGame () {
+        
+        let score = '';
+        computerPlay();
+        score = oneRound(playerThrow, compThrow);
+        
+        if (score == 'win') {
+            playerScore++;
+        } else if (score =='lose') {
+            compScore++;
+        } else if (score == 'wrong') {
+            --i;
+        }
+        resultsPrinted.textContent = `Results: ${playerScore}:${compScore}`
+
+        if (playerScore >= 5) {
+        alert('YOU WIN!');
+        resetScores();
+        }else if (compScore >= 5) {
+        alert('YOU LOSE!');
+        resetScores();
+    }
+        return(playerScore + ":" + compScore)
+    }
+
     function oneRound (playerSelect, compSelect) {
         playerSelect = playerSelect.toLowerCase();
         compSelect = compSelect.toLowerCase();
         if (compSelect == 'computer' || compSelect == '') {
-            console.log("Opponent Forfeits! : " + compSelect);
+            results("Opponent Forfeits! : " + compSelect);
             return("Opponent Forfeits! : " + compSelect, 'win');
         } else if (!(compSelect == 'rock' || compSelect == 'paper' || compSelect == 'scissors')) {
-            console.log('Computer Wrong Choice: ' + compSelect);
+            results('Computer Wrong Choice: ' + compSelect);
             return('Computer Wrong Choice: ' + compSelect);
         }
         if (playerSelect == 'rock' || playerSelect == 'paper' || playerSelect == 'scissors') {
             if (playerSelect == compSelect){
-                console.log('TIE');
+                results('TIE');
                 return('tie');
             }
             if (playerSelect == 'rock') {
                 if (compSelect == 'scissors') {
-                    console.log('Win To Scissors');
+                    results('Win To Scissors');
                     return('win');
                 } else {
-                    console.log('Lose to Paper');
+                    results('Lose to Paper');
                     return('lose');
                 }
             }
             if (playerSelect == 'paper') {
                 if (compSelect == 'rock') {
-                   console.log('Win To Rock');
+                    results('Win To Rock');
                     return('win');
                 } else {
-                    console.log('Lose to Scissors');
+                    results('Lose to Scissors');
                     return('lose');
                 }
             }
             if (playerSelect == 'scissors') {
                 if (compSelect == 'paper') {
-                    console.log('Win To Paper');
+                    results('Win To Paper');
                     return('win');
                 } else {
-                    console.log('Lose to Rock');
+                    results('Lose to Rock');
                     return('lose');
                 }
             }
         } else {
-        console.log('Wrong choice');
+            results('Wrong choice');
         return('wrong');
         }
     }
 
-    function game (rounds) {
+    /*function game (rounds) {
         let playerScore = 0;
         let compScore = 0;
 
@@ -95,7 +169,9 @@
             }
         }
         return(playerScore + ":" + compScore)
-    }
+    }*/
+
+
   </script>
 </body>
 </html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test</title>
+  <meta charset="UTF-8"/>
+</head>
+<body>
+    <button id='hello'>Hi</button>
+    <button id='two'>2</button>
+    <div id = number>Content</div>
+    <div id=container>
+        Contetn
+    </div>
+<script>
+   let a = document.createElement('p');
+   const container = document.querySelector('#container');
+    
+   
+    const c = document.getElementsByTagName('p');
+    const number = document.querySelector('#number');
+    
+
+   a.textContent = 'sup';
+   const hi = document.querySelector('#hello');
+    hi.addEventListener('click', () => {
+        a.textContent = 'no';
+        a.classList.add('dumb');
+        number.innerHTML = `Number: ${c.length} : ${a.className}`
+        })
+    
+    container.appendChild(a);
+
+
+    const two =  document.querySelector('#two');
+    two.addEventListener('click', () => {
+        let b = document.createElement('p');
+        b.textContent = 'dood';
+        container.appendChild(b);
+         number.innerHTML = `Number: ${c.length} : ${a.className}`;
+    })
+
+  number.innerHTML = `Number: ${c.length}`;
+ 
+
+
+</script>
+
+</body>
+</html>
